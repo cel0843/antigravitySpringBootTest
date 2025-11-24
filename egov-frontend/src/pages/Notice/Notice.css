@@ -1,0 +1,153 @@
+.notice-page,
+.notice-detail {
+    animation: fadeIn 0.5s ease-in;
+}
+
+.notice-table {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 30px;
+}
+
+.table-header,
+.table-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 120px 100px;
+    padding: 15px 20px;
+    align-items: center;
+    gap: 15px;
+}
+
+.table-header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.table-row {
+    border-bottom: 1px solid var(--gray-200);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.table-row:hover {
+    background-color: var(--gray-100);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.col-num {
+    text-align: center;
+}
+
+.col-title {
+    font-weight: 500;
+}
+
+.col-date,
+.col-views {
+    text-align: center;
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 8px;
+}
+
+.page-num {
+    padding: 8px 12px;
+    background: var(--white);
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.page-num:hover {
+    background-color: var(--gray-100);
+}
+
+.page-num.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+.notice-meta {
+    display: flex;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 2px solid var(--gray-200);
+    margin-bottom: 30px;
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+.notice-content {
+    line-height: 1.8;
+    padding: 30px;
+    min-height: 400px;
+}
+
+.notice-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.notice-content h3 {
+    font-size: 20px;
+    margin: 25px 0 15px;
+    color: var(--primary-color);
+}
+
+.notice-content p {
+    margin-bottom: 15px;
+}
+
+.notice-content ul {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.notice-content li {
+    margin-bottom: 8px;
+}
+
+.notice-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 60px 1fr 90px;
+        padding: 12px 15px;
+        gap: 10px;
+    }
+
+    .col-views {
+        display: none;
+    }
+
+    .col-date {
+        font-size: 12px;
+    }
+}
