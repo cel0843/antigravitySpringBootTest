@@ -1,153 +1,168 @@
-# eGovFramework MSA 프로젝트
+# 전자정부프레임워크 MSA + React 프로젝트
 
-전자정부프레임워크 기반 마이크로서비스 아키텍처(MSA) 프로젝트입니다.
+[![Deploy to GitHub Pages](https://github.com/cel0843/antigravitySpringBootTest/actions/workflows/deploy.yml/badge.svg)](https://github.com/cel0843/antigravitySpringBootTest/actions/workflows/deploy.yml)
 
-## 📋 프로젝트 구조
+## 🌐 Live Demo
 
-```
-egov-msa-parent/
-├── egov-discovery-service   # Eureka Server (서비스 디스커버리)
-├── egov-config-service       # Config Server (중앙 설정 관리)
-├── egov-gateway-service      # API Gateway (라우팅, 로드밸런싱)
-├── egov-user-service         # 사용자 관리 서비스
-├── egov-order-service        # 주문 관리 서비스
-└── egov-product-service      # 상품 관리 서비스
-```
+**프론트엔드**: https://cel0843.github.io/antigravitySpringBootTest/
 
-## 🏗️ 아키텍처
+## 프로젝트 개요
+
+전자정부프레임워크 기반의 **마이크로서비스 아키텍처(MSA)** 백엔드와 **React SPA** 프론트엔드를 포함한 풀스택 프로젝트입니다.
+
+### 아키텍처
 
 ```
-클라이언트
+React SPA (GitHub Pages)
     ↓
-API Gateway (8080)
+API Gateway (:8080)
     ↓
 ┌─────────────┬─────────────┬─────────────┐
 │ User Service│Order Service│Product Svc  │
-│   (8081)    │   (8082)    │   (8083)    │
+│   (:8081)   │   (:8082)   │   (:8083)   │
 └─────────────┴─────────────┴─────────────┘
          ↓           ↓           ↓
-    Eureka Discovery Server (8761)
+    Eureka Discovery Server (:8761)
 ```
 
-## 🚀 실행 방법
+## 백엔드 (MSA)
 
-### 1. 전체 빌드
+### 구성 서비스
+
+- **Discovery Service** (Eureka Server) - :8761
+- **Config Service** - :8888
+- **API Gateway** - :8080
+- **User Service** - :8081
+- **Order Service** - :8082
+- **Product Service** - :8083
+
+### 기술 스택
+
+- Spring Boot 2.7.18
+- Spring Cloud 2021.0.8
+- Java 1.8 (JDK 17)
+- Maven 3.9.11
+- H2 Database
+
+## 프론트엔드 (React SPA)
+
+### 페이지
+
+- 메인 페이지
+- 공지사항 (목록 + 상세)
+- 문의사항 (목록 + 작성)
+- 자주묻는질문 (FAQ)
+
+### 기술 스택
+
+- React 18.2.0
+- Vite 5.0.8
+- React Router 6.20.0
+- Axios 1.6.2
+
+## 로컬 실행 방법
+
+### 백엔드 실행
+
 ```bash
-mvn clean install
-```
-
-### 2. 서비스 실행 순서
-
-**중요**: 반드시 아래 순서대로 실행해야 합니다!
-
-#### ① Discovery Service 실행 (필수 - 가장 먼저)
-```bash
+# 1. Discovery Service (필수 - 가장 먼저)
 cd egov-discovery-service
 mvn spring-boot:run
-```
-- 포트: 8761
-- URL: http://localhost:8761
-- Eureka Dashboard에서 등록된 서비스 확인 가능
 
-#### ② Config Service 실행 (선택)
-```bash
-cd egov-config-service
-mvn spring-boot:run
-```
-- 포트: 8888
+# 2. 비즈니스 서비스들 (각각 별도 터미널에서)
+cd egov-user-service && mvn spring-boot:run
+cd egov-order-service && mvn spring-boot:run
+cd egov-product-service && mvn spring-boot:run
 
-#### ③ 비즈니스 서비스 실행
-각 서비스를 별도 터미널에서 실행:
-
-**User Service**
-```bash
-cd egov-user-service
-mvn spring-boot:run
-```
-- 포트: 8081
-- Health Check: http://localhost:8081/api/health
-- API: http://localhost:8081/api/users
-
-**Order Service**
-```bash
-cd egov-order-service
-mvn spring-boot:run
-```
-- 포트: 8082
-- Health Check: http://localhost:8082/api/health
-- API: http://localhost:8082/api/orders
-
-**Product Service**
-```bash
-cd egov-product-service
-mvn spring-boot:run
-```
-- 포트: 8083
-- Health Check: http://localhost:8083/api/health
-- API: http://localhost:8083/api/products
-
-#### ④ Gateway Service 실행 (마지막)
-```bash
+# 3. API Gateway (마지막)
 cd egov-gateway-service
 mvn spring-boot:run
 ```
-- 포트: 8080
 
-## 🌐 API 엔드포인트
+### 프론트엔드 실행
 
-### Gateway를 통한 접근 (권장)
 ```bash
-# User Service
-http://localhost:8080/user/api/health
-http://localhost:8080/user/api/users
-
-# Order Service
-http://localhost:8080/order/api/health
-http://localhost:8080/order/api/orders
-
-# Product Service
-http://localhost:8080/product/api/health
-http://localhost:8080/product/api/products
+cd egov-frontend
+npm install
+npm run dev
 ```
 
-### 직접 접근
-각 서비스에 직접 접근도 가능합니다:
-- User: http://localhost:8081/api/users
-- Order: http://localhost:8082/api/orders
-- Product: http://localhost:8083/api/products
+로컬 접속: http://localhost:3000
 
-## 📊 모니터링
+## GitHub Pages 배포
 
-### Eureka Dashboard
-http://localhost:8761
+프론트엔드는 자동으로 GitHub Pages에 배포됩니다.
 
-모든 마이크로서비스의 등록 상태와 헬스 체크를 확인할 수 있습니다.
+### 수동 배포
 
-## 🛠️ 기술 스택
+```bash
+cd egov-frontend
+npm run deploy
+```
 
-- **Spring Boot**: 2.7.18
-- **Spring Cloud**: 2021.0.8
-- **Java**: 1.8
-- **Database**: H2 (각 서비스별 독립 DB)
-- **Service Discovery**: Netflix Eureka
-- **API Gateway**: Spring Cloud Gateway
-- **Config Management**: Spring Cloud Config
+### 자동 배포
 
-## 📝 주요 특징
+`main` 브랜치에 푸시하면 GitHub Actions가 자동으로 빌드 및 배포합니다.
 
-1. **서비스 디스커버리**: Eureka를 통한 자동 서비스 등록 및 발견
-2. **API Gateway**: 단일 진입점을 통한 라우팅 및 로드 밸런싱
-3. **독립 배포**: 각 마이크로서비스 독립적으로 배포 가능
-4. **독립 데이터베이스**: 각 서비스가 자체 H2 DB 사용
-5. **중앙 설정 관리**: Config Server를 통한 설정 관리
+## 접속 URL
 
-## 🔧 개발 환경
+### 프로덕션
+- **프론트엔드**: https://cel0843.github.io/antigravitySpringBootTest/
 
-- Maven 3.9.11
-- JDK 17 (또는 JDK 8 이상)
-- Windows 10
+### 로컬 개발
+- **프론트엔드**: http://localhost:3000
+- **Eureka Dashboard**: http://localhost:8761
+- **API Gateway**: http://localhost:8080
 
-## 📚 참고 자료
+## 프로젝트 구조
 
-- [전자정부 표준프레임워크 포털](https://www.egovframe.go.kr)
-- [Spring Cloud 공식 문서](https://spring.io/projects/spring-cloud)
+```
+antigravitySpringBootTest/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # GitHub Actions 워크플로우
+├── egov-discovery-service/     # Eureka Server
+├── egov-config-service/         # Config Server
+├── egov-gateway-service/        # API Gateway
+├── egov-user-service/           # User Service
+├── egov-order-service/          # Order Service
+├── egov-product-service/        # Product Service
+├── egov-frontend/               # React SPA
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.js
+├── pom.xml                      # 부모 POM
+└── README.md
+```
+
+## 주요 기능
+
+### ✅ MSA 아키텍처
+- 서비스 디스커버리 (Eureka)
+- API Gateway를 통한 통합 접근
+- 독립적인 서비스 배포 및 확장
+- 각 서비스별 독립 데이터베이스
+
+### ✅ React SPA
+- 클라이언트 사이드 라우팅
+- 반응형 디자인
+- 모던 UI/UX
+- GitHub Pages 호스팅
+
+### ✅ CI/CD
+- GitHub Actions 자동 배포
+- 프로덕션 빌드 최적화
+
+## 라이선스
+
+전자정부 표준프레임워크 라이선스
+
+## 개발자
+
+cel0843
+
+## 참고 자료
+
+- [전자정부 표준프레임워크](https://www.egovframe.go.kr)
+- [Spring Cloud](https://spring.io/projects/spring-cloud)
+- [React](https://react.dev)
